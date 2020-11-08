@@ -1,7 +1,18 @@
 const express = require("express")
 const bodyParser = require("body-parser")
+const mongoose = require("mongoose")
 
 const app = express()
+
+mongoose.connect("mongodb://localhost:27017/clientes", { useNewUrlParser: true, useUnifiedTopology: true })
+
+let db = mongoose.connection 
+
+db.on("error", console.log.bind(console, "connection error:"))
+db.once("open", function (){
+  console.log("conexão feita com sucesso")
+})
+
 
 //rotas
 const clientes = require("./routes/clientesRoute")
